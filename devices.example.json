@@ -1,0 +1,114 @@
+{
+    "groups": [
+        {
+            "id": "BedRoomFanLights",
+            "display": "Bedroom Fan Lights",
+            "manufactuer": "Third Reality\\Philips Hue",
+            "actions": {
+                "fan_on": [
+                    "switches.BedRoomFanSwitch.on"
+                ],
+                "fan_off": [
+                    "switches.BedRoomFanSwitch.off"
+                ],
+                "light_on": [
+                    "switches.BedRoomFanSwitch.on",
+                    "file.hue.groups.Bedroom.on"
+                ],
+                "light_off": [
+                    "switches.BedRoomFanSwitch.on",
+                    "file.hue.groups.Bedroom.off"
+                ]
+            }
+        },
+        "file.hue.groups"
+    ],
+    "types": {
+        "bulbs": {
+            "display": "Smart Bulbs",
+            "devices": [
+                "file.hue.lights"
+            ]
+        },
+        "switches": {
+            "display": "Switches",
+            "devices": [
+                {
+                    "display": "Light Room Fan Switch",
+                    "id": "LivingRoomSwitch",
+                    "manufactuer": "Third Reality",
+                    "actions": {
+                        "on": [
+                            {
+                                "url": "alexaRoutineUrl",
+                                "method": "get",
+                                "params": {},
+                                "delay": 0
+                            }
+                        ],
+                        "off": [
+                            {
+                                "url": "alexaRoutineUrl",
+                                "method": "get",
+                                "params": {},
+                                "delay": 0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "display": "Bedroom Fan Switch",
+                    "id": "BedRoomFanSwitch",
+                    "manufactuer": "Third Reality",
+                    "actions": {
+                        "on": [
+                            {
+                                "url": "alexaRoutineUrl",
+                                "method": "get",
+                                "params": {},
+                                "delay": 0
+                            }
+                        ],
+                        "off": [
+                            {
+                                "url": "alexaRoutineUrl",
+                                "method": "get",
+                                "params": {},
+                                "delay": 0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "OverheadStoveLight",
+                    "display": "Overhead Stove Light",
+                    "manufactuer": "Third Reality",
+                    "actions": {
+                        "on": [
+                            {
+                                "url": "alexaRoutineUrl",
+                                "method": "get",
+                                "params": {},
+                                "delay": 0
+                            }
+                        ],
+                        "off": [
+                            {
+                                "url": "alexaRoutineUrl",
+                                "method": "get",
+                                "params": {},
+                                "delay": 0
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "vac": {
+            "display": "RoboVacs",
+            "devices": [
+
+            ]
+        }
+    }
+}
