@@ -1,3 +1,4 @@
-data/
+devices/
+sources/
 node_modules/
-combined.json
+config.json

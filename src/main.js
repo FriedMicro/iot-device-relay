@@ -1,10 +1,24 @@
-import generator from "./generator/file.js";
-import formatter from "./generator/formatter.js";
-import safeties from "./generator/safeties.js";
-import groups from "./generator/groups.js";
+import Koa from "koa";
+import config from "./config.js";
+import devices from "./devices.js";
+import loadCode from "./loadCode.js";
 
-const data = generator();
-const formattedData = formatter(data);
-const finalFormat = safeties(formattedData);
-const groupedData = groups(finalFormat);
-console.log(groupedData.devices);
+(async () => {
+  const files = devices("./devices");
+  const deviceSrc = await loadCode(files);
+  console.log(files);
+  
+  const app = new Koa();
+  
+  app.use(async ctx => {
+    for(const file of files){
+      if(file == ctx.path){
+        console.log(`Device found with: ${file}`);
+        deviceSrc[file].default();
+      }
+    }
+    ctx.body = 'Device Request OK';
+  });
+  
+  app.listen(config().port);
+})()
