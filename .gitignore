@@ -2,3 +2,4 @@ devices/
 sources/
 node_modules/
 config.json
+devices.json
