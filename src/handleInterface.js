@@ -51,7 +51,7 @@ const fsWrite = (deviceMap) => {
         const devicePath = deviceMap[device];
         const deviceCode = `
 let ${device} = (state) => {
-    const requestPath = "http://${config().device_ip}:${config().port}/${devicePath}";
+    const requestPath = "http://${config().device_ip}:${config().port}${devicePath}";
     return axios.post(requestPath, {
         state: state,
         params: {}
