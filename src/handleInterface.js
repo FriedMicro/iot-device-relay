@@ -1,5 +1,6 @@
 import _ from "lodash";
 import fs from "fs";
+import config from "./config.js";
 
 const formParamPaths = (files) => {
     const temp = [];
@@ -38,10 +39,47 @@ const combineUrlToPath = (funcNames, paths) => {
     return url;
 }
 
+const fsWrite = (deviceMap) => {
+    const generatedSourceFile = "devicesGenerated.js";
+    try {
+        fs.unlinkSync(generatedSourceFile);
+    } catch (e) {}
+    const initCode = `import axios from "axios";
+`;
+    fs.writeFileSync(generatedSourceFile, initCode);
+    for (const device in deviceMap) {
+        const devicePath = deviceMap[device];
+        const deviceCode = `
+let ${device} = (state, params) => {
+    const requestPath = "http://${config().device_ip}:${config().port}/${devicePath}";
+    return axios.post(requestPath, {
+        state: state,
+        params: params
+    });
+}
+`;
+        fs.appendFileSync(generatedSourceFile, deviceCode);
+    }
+
+    const deviceOverridesFile = "deviceOverrides.js";
+    if (fs.existsSync(deviceOverridesFile)) {
+        const overrideData = fs.readFileSync(deviceOverridesFile, "utf-8");
+        fs.appendFileSync(generatedSourceFile, overrideData);
+    }
+
+    for (const device in deviceMap) {
+        const functionExports = `
+export {${device}};
+`;
+        fs.appendFileSync(generatedSourceFile, functionExports);
+    }
+}
+
 export default (files) => {
     const paths = formParamPaths(files);
     const funcNames = formFuncNames(paths);
     const dataMap = combineUrlToPath(funcNames, files);
     fs.writeFileSync("devices.json", JSON.stringify(dataMap));
+    fsWrite(dataMap);
     console.log(dataMap);
 }

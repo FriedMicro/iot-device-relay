@@ -3,3 +3,5 @@ sources/
 node_modules/
 config.json
 devices.json
+deviceOverrides.js
+devicesGenerated.js
